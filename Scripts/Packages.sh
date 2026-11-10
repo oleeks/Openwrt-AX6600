@@ -69,7 +69,7 @@ if [[ "${WRT_PROFILE^^}" == "PLUS" ]]; then
 	#UPDATE_PACKAGE "passwall" "Openwrt-Passwall/openwrt-passwall" "main" "pkg"
 	UPDATE_PACKAGE "passwall2" "Openwrt-Passwall/openwrt-passwall2" "main" "pkg"
 	UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
-	UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
+	UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main" "pkg"
 	# 分区扩容与网络唤醒：源码仅 PLUS 版拉取，PURE 纯净版不集成
 	UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 	UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus luci-app-wolultra"
@@ -88,7 +88,6 @@ fi
 #UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 #UPDATE_PACKAGE "qbittorrent" "sbwml/luci-app-qbittorrent" "master" "" "qt6base qt6tools rblibtorrent"
 #UPDATE_PACKAGE "qmodem" "FUjr/QModem" "main"
-UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
 #局域网唤醒
 #UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus luci-app-wolultra"
 #UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
