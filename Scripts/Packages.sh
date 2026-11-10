@@ -68,8 +68,8 @@ if [[ "${WRT_PROFILE^^}" == "PLUS" ]]; then
 	#一代 PassWall 已由 PassWall2 取代，fork 者如需可取消注释，并同步启用 Config/GENERAL_AX6600_PLUS.txt 中对应配置段
 	#UPDATE_PACKAGE "passwall" "Openwrt-Passwall/openwrt-passwall" "main" "pkg"
 	UPDATE_PACKAGE "passwall2" "Openwrt-Passwall/openwrt-passwall2" "main" "pkg"
-	UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12" "pkg"
-	UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main" "pkg"
+	UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
+	UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
 	# 分区扩容与网络唤醒：源码仅 PLUS 版拉取，PURE 纯净版不集成
 	UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 	UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus luci-app-wolultra"
