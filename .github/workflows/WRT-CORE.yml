@@ -454,6 +454,8 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Release Firmware
+        # TEST 模式只产出 .config 用于校验，不产出固件；此时若不跳过，会创建只有配置文件的空 Release 与 tag
+        if: env.WRT_TEST != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.WRT_CONFIG }}-${{ env.WRT_PROFILE }}-${{ env.WRT_INFO }}-${{ env.WRT_BRANCH }}-${{ env.WRT_DATE }}

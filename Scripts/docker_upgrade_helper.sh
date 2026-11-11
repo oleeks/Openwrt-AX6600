@@ -2116,16 +2116,23 @@ do_verify_runtime() {
 
             # 3e. 核验 WAN 边界阻断策略 (确认 WAN 入站无法未经授权直连 Docker 端口)
             log_info "核验 WAN 边界阻断策略..."
+            WAN_GUARD_OK=0
             if command -v iptables >/dev/null 2>&1; then
                 FWD_POLICY=$(iptables -S FORWARD 2>/dev/null | head -n 1 || true)
                 if echo "$FWD_POLICY" | grep -qE -- "-P FORWARD (DROP|REJECT)"; then
                     log_info "iptables FORWARD 默认策略为 DROP/REJECT，WAN 入站阻断安全"
+                    WAN_GUARD_OK=1
                 fi
             fi
             if command -v nft >/dev/null 2>&1; then
                 if nft list chain inet fw4 forward 2>/dev/null | grep -qiE "drop|reject"; then
                     log_info "nftables fw4 forward 包含 drop/reject 策略，WAN 边界阻断安全"
+                    WAN_GUARD_OK=1
                 fi
+            fi
+            # 两个后端都没能确认阻断策略时明确告警（例如 FORWARD 策略为 ACCEPT），避免“静默通过”造成安全假象
+            if [ "$WAN_GUARD_OK" -ne 1 ]; then
+                log_warn "未检测到 WAN 边界 drop/reject 策略（FORWARD 可能为 ACCEPT），Docker 发布端口存在对 WAN 暴露风险，请人工确认防火墙配置"
             fi
         fi
     fi
