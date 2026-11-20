@@ -77,7 +77,7 @@ fi
 
 #UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 
-#UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
+UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
 #UPDATE_PACKAGE "diskman" "lisaac/luci-app-diskman" "master"
 #UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
 #UPDATE_PACKAGE "gecoosac" "laipeng668/luci-app-gecoosac" "main"
@@ -86,7 +86,7 @@ fi
 #UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 #UPDATE_PACKAGE "qbittorrent" "sbwml/luci-app-qbittorrent" "master" "" "qt6base qt6tools rblibtorrent"
 #UPDATE_PACKAGE "qmodem" "FUjr/QModem" "main"
-#UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
+UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
 #局域网唤醒
 #UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus luci-app-wolultra"
 #UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
