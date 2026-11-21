@@ -432,21 +432,8 @@ fi
 #配置文件修改
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
 echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
-#固定 LuCI 主题（默认 Material，luci feed 自带，无需克隆外部仓库）
-LUCI_THEME_NAME="${WRT_THEME:-material}"
-echo "CONFIG_PACKAGE_luci-theme-$LUCI_THEME_NAME=y" >> ./.config
-
-#用 uci-defaults 固定主题入口
-# - 多个主题共存时，后安装的主题包 post-install 会抢改 mediaurlbase
-# - 默认主题不是 bootstrap 时，/etc/config/luci 里的 mediaurlbase 必须显式指定
-LUCI_THEME_DEFAULTS_DIR="./package/base-files/files/etc/uci-defaults"
-mkdir -p "$LUCI_THEME_DEFAULTS_DIR"
-printf '%s\n' \
-	'[ -x /sbin/uci ] || exit 0' \
-	"uci -q set luci.main.mediaurlbase='/luci-static/$LUCI_THEME_NAME'" \
-	'uci -q commit luci' \
-	'exit 0' > "$LUCI_THEME_DEFAULTS_DIR/96-luci-theme"
-chmod 755 "$LUCI_THEME_DEFAULTS_DIR/96-luci-theme"
+#echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
+#echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 #手动调整的插件
 if [ -n "$WRT_PACKAGE" ]; then
