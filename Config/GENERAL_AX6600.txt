@@ -1,3 +1,6 @@
+CONFIG_VERSION_DIST="ImmortalWRT"
+CONFIG_VERSION_NUMBER="AX6600"
+
 #科学插件调整
 #CONFIG_PACKAGE_luci-app-homeproxy=y
 #增加插件

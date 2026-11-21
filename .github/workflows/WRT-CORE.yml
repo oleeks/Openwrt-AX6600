@@ -102,7 +102,8 @@ jobs:
       - name: Initialization Values
         run: |
           echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d-%H.%M.%S")" >> $GITHUB_ENV
-          echo "WRT_MARK=${GITHUB_REPOSITORY%%/*}" >> $GITHUB_ENV
+          # 固件显示名：状态页会显示 "/ ${WRT_MARK}-${WRT_DATE}"，固定为 AX6600 而非仓库拥有者用户名
+          echo "WRT_MARK=AX6600" >> $GITHUB_ENV
           WRT_PROFILE_UPPER=$(echo "${WRT_PROFILE:-PURE}" | tr '[:lower:]' '[:upper:]')
           case "$WRT_PROFILE_UPPER" in
             PURE|PLUS) ;;
