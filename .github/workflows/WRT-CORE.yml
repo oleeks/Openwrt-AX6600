@@ -331,6 +331,19 @@ jobs:
             fi
           fi
 
+          # 7. 设备端 apk 源断言：passwall_packages feed 必须置 m
+          #    否则 /etc/apk/repositories.d/distfeeds.list 会注册上游那个长期截断的子源
+          if [[ "${WRT_PROFILE_UPPER:-${WRT_PROFILE}}" == "PLUS" ]]; then
+            if grep -q "^CONFIG_FEED_passwall_packages=m$" .config; then
+              echo "  [PASS] passwall_packages feed 已置 m（设备端 distfeeds.list 中该源为注释状态）"
+            elif grep -q "^CONFIG_FEED_passwall_packages=y$" .config; then
+              echo "::error::断言失败: CONFIG_FEED_passwall_packages 为 y，设备端 distfeeds.list 会启用不可用的 passwall_packages 源！"
+              FAIL=1
+            else
+              echo "  [SKIP] .config 中无 CONFIG_FEED_passwall_packages=y（未注册该子源，无需处理）"
+            fi
+          fi
+
           rm -f .config.seed
 
           if [[ $FAIL -ne 0 ]]; then

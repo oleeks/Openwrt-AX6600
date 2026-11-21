@@ -94,3 +94,10 @@ CONFIG_PACKAGE_luci-app-p910nd=y
 
 # Filemanager
 CONFIG_PACKAGE_luci-app-filemanager=y
+
+# 构建期处理：passwall_packages feed 只用于编译时取源码，不作为设备端 apk 源。
+# 该子源在 downloads.immortalwrt.org 上长期被截断（apk update 报
+# "unexpected end of file" / wget error 8），且相关包已随固件编入，设备端无需再装。
+# 值 m 会让 /etc/apk/repositories.d/distfeeds.list 中对应行以 "# " 开头
+# （见 include/feeds.mk 的 FeedSourcesAppendAPK：$(if $(filter m,...),# )）。
+CONFIG_FEED_passwall_packages=m
