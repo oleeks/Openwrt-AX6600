@@ -37,6 +37,26 @@ fi
 #添加编译日期标识
 apply_sed_to_matches "./feeds/luci/modules/luci-mod-status/" "10_system.js" "s/(\\(luciversion || ''\\))/(\\1) + (' \\/ $WRT_MARK-$WRT_DATE')/g"
 
+#修正状态页「已用内存」统计口径
+#上游实现是 Used = total - free，把可回收的 buff/cache 也算成已用，
+#2.9G 内存的机器会显示成 2.6~2.8G 占用、看起来像内存耗尽。
+#改为 Used = total - available，与 free -m 的 used 口径一致。
+#上游表达式一旦变更则只告警、不阻断编译。
+apply_sed_to_matches "./feeds/luci/modules/luci-mod-status/" "20_memory.js" \
+	"s/(mem\\.total&&mem\\.free)?(mem\\.total-mem\\.free):null/(mem.total\\&\\&mem.available)?(mem.total-mem.available):null/"
+MEMORY_JS=$(find "./feeds/luci/modules/luci-mod-status/" -type f -name "20_memory.js" 2>/dev/null | head -n 1)
+if [ -n "$MEMORY_JS" ]; then
+	if grep -q "mem.total-mem.available" "$MEMORY_JS"; then
+		echo "LuCI 内存口径已修正为 total-available: $MEMORY_JS"
+	elif grep -q "mem.total-mem.free" "$MEMORY_JS"; then
+		echo "警告: LuCI 内存口径修正未命中，上游表达式可能已变更: $MEMORY_JS"
+	else
+		echo "提示: 20_memory.js 未包含已知内存表达式，跳过修正: $MEMORY_JS"
+	fi
+else
+	echo "警告: 未找到 luci-mod-status 的 20_memory.js，跳过内存口径修正"
+fi
+
 # =========================================================
 # WiFi 默认配置与安全加固：
 # 1. 兼容现代 ucode 模板 (mac80211.uc) 与经典 shell 模板 (mac80211.sh)，源码构建期原生植入默认配置
